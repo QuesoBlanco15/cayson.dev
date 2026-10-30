@@ -1,359 +1,1554 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>cayson.dev — pardon the dust</title>
-  <meta name="description" content="cayson.dev is getting a redesign. The new site launches 10/30/26.">
-  <meta name="theme-color" content="#f5f2eb" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#262624" media="(prefers-color-scheme: dark)">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cayson Martin | cayson.dev</title>
+<meta name="description" content="Cayson Martin is a Louisiana Tech CS student, designer, and developer. Websites, apps, and software, designed and built by hand. Hiring, or have a project? Get in touch.">
+<link rel="canonical" href="https://cayson.dev/">
+<meta name="theme-color" content="#2E5E3E">
 
-  <!-- Favicon: the bracket mark -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23385030'/%3E%3Cpath d='M33 14 L15 32 L33 50' fill='none' stroke='%23f5f2eb' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M40 26 L48 32 L40 38' fill='none' stroke='%23e29579' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<!-- Link previews (iMessage, LinkedIn, Discord, Slack, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="cayson.dev">
+<meta property="og:url" content="https://cayson.dev/">
+<meta property="og:title" content="Cayson Martin, designer and developer">
+<meta property="og:description" content="Louisiana Tech CS student, designer, and developer. Websites, apps, and software, designed and built by hand.">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://cayson.dev/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="cayson.dev: Louisiana Tech CS student, designer, and developer">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Favicon: the bracket mark. Real files rather than inline data, so Google can show it in search results -->
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-  <style>
-    /* cayson.dev v2 brand tokens */
-    :root {
-      --forest: #385030;
-      --blue-brand: #5e7f99;
-      --coral-brand: #e29579;
-      --cream: #f5f2eb;
-      --slate: #262624;
+<!-- Tells search engines who this site belongs to, so name searches connect it to these profiles -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Cayson Martin",
+  "url": "https://cayson.dev/",
+  "image": "https://cayson.dev/assets/portrait.jpg",
+  "email": "mailto:hello@cayson.dev",
+  "jobTitle": "Designer and developer",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "Louisiana Tech University"
+  },
+  "knowsAbout": ["Web design", "Web development", "UI/UX design", "iOS development", "Python", "Swift", "JavaScript", "Linux"],
+  "sameAs": [
+    "https://github.com/QuesoBlanco15",
+    "https://www.instagram.com/cayson.dev/",
+    "https://www.linkedin.com/in/cayson-martin-7936a9447/"
+  ]
+}
+</script>
 
-      --bg: var(--cream);
-      --surface: #ebe7dd;
-      --text: var(--slate);
-      --muted: #6b6a62;
-      --border: rgba(38, 38, 36, 0.14);
-      --green: var(--forest);          /* fills */
-      --green-text: var(--forest);     /* green used as text/strokes */
-      --blue: var(--blue-brand);
-      --coral: var(--coral-brand);
-      --on-green: var(--cream);
-      --shadow: 0 1px 2px rgba(38, 38, 36, .04), 0 10px 28px -14px rgba(38, 38, 36, .18);
-      color-scheme: light;
+<!-- Pick the theme before first paint: saved choice, otherwise the visitor's system setting.
+     Also marks that JavaScript is running, so the scroll reveal never hides content without it -->
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.classList.add('js');
+    // previewing on this computer (not the live site): show the to-do reminders
+    if (location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+      document.documentElement.classList.add('local');
     }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: var(--slate);
-        --surface: #2f2f2c;
-        --text: var(--cream);
-        --muted: #b0aea5;
-        --border: rgba(245, 242, 235, 0.14);
-        --green-text: #8fae80;
-        --shadow: 0 1px 2px rgba(0,0,0,.25), 0 10px 28px -14px rgba(0,0,0,.5);
-        color-scheme: dark;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: var(--slate);
-      --surface: #2f2f2c;
-      --text: var(--cream);
-      --muted: #b0aea5;
-      --border: rgba(245, 242, 235, 0.14);
-      --green-text: #8fae80;
-      --shadow: 0 1px 2px rgba(0,0,0,.25), 0 10px 28px -14px rgba(0,0,0,.5);
-      color-scheme: dark;
-    }
+  })();
+</script>
 
-    /* ---------- Base ---------- */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; }
-    body {
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500&display=swap">
+<style>
+  /* design language v2 tokens */
+  :root {
+    --bg: #F1E8D6;
+    --surface: #F8F2E6;
+    --ink: #1F2421;
+    --muted: #5E665F;
+    --primary: #2E5E3E;
+    --secondary: #3B6E80;
+    --accent: #D9603F;
+    --border: #E0D3BC;
+
+    /* primary buttons are forest green with cream text in both modes, like the nav.
+       only the hover and the secondary button's outline change with the theme */
+    --btn-hover: #244B31;
+    --btn-outline: var(--ink);
+
+    /* the nav, services band and footer stay forest green in both modes,
+       so they get fixed colors. coral on green uses the lifted coral to stay readable */
+    --forest: #2E5E3E;
+    --cream: #F6F1E7;
+    --accent-on-forest: #F08A6C;
+    --cream-soft: color-mix(in srgb, var(--cream) 80%, transparent);
+
+    --max-width: 1080px;
+
+    --nav-bg: var(--forest);
+    --nav-text: var(--cream);
+    --nav-border: color-mix(in srgb, var(--cream) 22%, transparent);
+    --nav-pad: 20px;
+
+    --shadow: 0 1px 2px rgba(31, 36, 33, .04), 0 12px 28px -16px rgba(31, 36, 33, .22);
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    --bg: #15191C;
+    --surface: #1D2226;
+    --ink: #EDE6D8;
+    --muted: #A3AAA2;
+    --primary: #86B893;
+    --secondary: #86B4C4;
+    --accent: #F08A6C;
+    --border: #2C3338;
+
+    /* on the dark page the hover lightens instead, and the outline steps back */
+    --btn-hover: #376E4A;
+    --btn-outline: #5E665F;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 28px -16px rgba(0, 0, 0, .55);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 68px; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* keyboard focus: green ring on the page, cream ring on the green nav, band and footer */
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+  header :focus-visible,
+  footer :focus-visible,
+  .band :focus-visible { outline-color: var(--cream); }
+
+  .wrap {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* the bracket mark, drawn inline so it needs no image files.
+     nav and footer are green in both modes, so the big bracket is always cream */
+  .brand-mark { width: 36px; height: 36px; flex: none; }
+  .brand-mark .mark-lt { stroke: var(--cream); }
+  .brand-mark .mark-gt { stroke: var(--accent-on-forest); }
+
+  section { padding: 88px 0; }
+
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-lede {
+    color: var(--muted);
+    max-width: 52ch;
+    margin: 14px 0 0;
+  }
+
+  /* the hero's dot grid, reused as a texture */
+  .dots {
+    background-image: radial-gradient(var(--border) 1.5px, transparent 2px);
+    background-size: 24px 24px;
+  }
+
+
+  /* header */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    border-bottom: 1px solid var(--nav-border);
+    transition: transform 0.25s ease;
+  }
+
+  header.hidden {
+    transform: translateY(-100%);
+  }
+
+  header .wrap {
+    display: flex;
+    align-items: center;
+    height: 68px;
+    max-width: none;
+    padding: 0 var(--nav-pad);
+  }
+
+  .brand {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* wordmark: Fraunces like the headlines, with .dev in coral */
+  .brand-word {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: 23px;
+    line-height: 1;
+    letter-spacing: -0.015em;
+  }
+
+  .brand-word .tld { color: var(--accent-on-forest); }
+
+  nav.primary-nav {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-left: auto;
+    margin-right: 32px;
+  }
+
+  nav.primary-nav a {
+    font-size: 16px;
+    opacity: 0.78;
+  }
+
+  nav.primary-nav a:hover { opacity: 1; }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .theme-toggle,
+  .menu-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: inherit;
+  }
+
+  header .theme-toggle,
+  header .menu-toggle {
+    border-color: var(--nav-border);
+  }
+
+  .menu-toggle { display: none; }
+
+  .theme-toggle svg, .menu-toggle svg { width: 18px; height: 18px; }
+
+  [data-theme="dark"] .icon-sun { display: block; }
+  [data-theme="dark"] .icon-moon { display: none; }
+  [data-theme="light"] .icon-sun { display: none; }
+  [data-theme="light"] .icon-moon { display: block; }
+
+  /* buttons */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .btn-primary {
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .btn-primary:hover { background: var(--btn-hover); }
+
+  .btn-secondary {
+    background: var(--bg);
+    color: var(--ink);
+    border-color: var(--btn-outline);
+  }
+
+  /* for use on the green band */
+  .btn-light {
+    background: var(--cream);
+    color: var(--forest);
+  }
+
+  .btn[disabled] { opacity: 0.6; cursor: default; transform: none; }
+
+  /* hero */
+
+  .hero {
+    background: radial-gradient(var(--border) 1.5px, transparent 2px) 0 0 / 24px 24px, var(--bg);
+    padding: 0;
+    min-height: calc(100vh - 68px);
+    min-height: calc(100svh - 68px);
+    display: flex;
+    align-items: center;
+  }
+
+  .hero .wrap {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    max-width: 1100px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 7.5vw, 76px);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  /* each phrase stays whole, so the headline only ever breaks between them */
+  .hero h1 .line { display: inline-block; }
+
+  .hero p.lede {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 600px;
+    margin: 24px auto 36px;
+    text-wrap: balance;
+  }
+
+  .hero-actions { display: flex; justify-content: center; gap: 12px; }
+
+  /* about */
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  .about-portrait {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .about-copy h2 { margin-bottom: 18px; }
+
+  .about-copy p {
+    max-width: 62ch;
+    margin: 0 0 16px;
+  }
+
+  /* websites and software */
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .work-grid-two {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 44px;
+  }
+
+  .work-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 20px;
+    background: var(--surface);
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  a.work-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+
+  /* an open slot that points to the contact form until there's real work to fill it */
+  .work-card.empty {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 240px;
+    padding: 32px 28px;
+    background: transparent;
+    border: 1px dashed color-mix(in srgb, var(--primary) 45%, var(--border));
+  }
+
+  .work-card.empty:only-child { grid-column: 1 / -1; }
+  .work-card.empty h3 { margin-bottom: 8px; }
+  .work-card.empty p { max-width: 44ch; }
+
+  /* tinted dot-grid panel with the project's name, standing in for a screenshot */
+  .tint-forest { --tint: var(--primary); }
+  .tint-blue   { --tint: var(--secondary); }
+
+  .work-card .thumb {
+    aspect-ratio: 16/10;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(color-mix(in srgb, var(--tint) 30%, transparent) 1.3px, transparent 1.8px) 0 0 / 18px 18px,
+      color-mix(in srgb, var(--tint) 12%, var(--bg));
+    border: 1px solid color-mix(in srgb, var(--tint) 22%, transparent);
+    color: var(--tint);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    overflow: hidden;
+  }
+
+  /* screenshot slideshow inside the thumbnail */
+  .work-card .thumb { position: relative; }
+
+  .slides { position: absolute; inset: 0; }
+
+  .slides img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .slides img.active { opacity: 1; }
+
+  .slideshow.has-slides .thumb-label { visibility: hidden; }
+
+  /* with more than one screenshot, clicking the picture shows the next one */
+  .slideshow.can-advance { cursor: pointer; }
+
+  /* in-progress thumbnail: the project's name and a short checklist of what works
+     and what's next, on the same tinted dot grid. A filled check means done,
+     a dashed ring means still being built */
+  .work-card .thumb.wip {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px 28px;
+    overflow: visible;
+    font-style: normal;
+  }
+
+  .wip-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .wip-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+
+  .wip-list li { position: relative; padding-left: 26px; }
+
+  .wip-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 2px;
+    width: 17px;
+    height: 17px;
+    box-sizing: border-box;
+    border-radius: 50%;
+  }
+
+  .wip-list .done::before { background: var(--tint); }
+
+  .wip-list .done::after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 4px;
+    height: 8px;
+    border: solid var(--surface);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .wip-list .next { color: var(--muted); }
+  .wip-list .next::before { border: 1.5px dashed var(--tint); }
+
+  .slide-dots {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    background: rgba(31, 36, 33, .4);
+    backdrop-filter: blur(4px);
+  }
+
+  .slide-dots:empty { display: none; }
+
+  .slide-dots button {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--cream) 55%, transparent);
+    cursor: pointer;
+    transition: width 0.25s ease, background 0.25s ease;
+  }
+
+  .slide-dots button.active { width: 18px; background: var(--cream); }
+
+  .work-card .card-body { padding: 0 8px; display: flex; flex-direction: column; flex: 1; }
+
+  .work-card h3 {
+    font-size: 21px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  .work-card p {
+    font-size: 16px;
+    color: var(--muted);
+    margin: 0 0 18px;
+  }
+
+  .card-foot {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .work-card .tag {
+    font-size: 13px;
+    color: var(--secondary);
+  }
+
+  .card-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+
+  .card-link span { display: inline-block; transition: transform 0.2s ease; }
+  a.work-card:hover .card-link span { transform: translateX(3px); }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .status.live::before { background: var(--primary); }
+
+  /* services: a green band that echoes the nav */
+
+  .band {
+    background:
+      radial-gradient(color-mix(in srgb, var(--cream) 13%, transparent) 1.5px, transparent 2px) 0 0 / 24px 24px,
+      var(--forest);
+    color: var(--cream);
+    border-top: none;
+  }
+
+  section.band + section { border-top: none; }
+
+
+  .band .section-lede { color: color-mix(in srgb, var(--cream) 78%, transparent); }
+
+  /* desktop: intro and call to action on the left, the four services on the right,
+     tools along the bottom, sized to fit on one screen */
+  #services { padding: 56px 0; }
+
+  .services-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    grid-template-areas:
+      "intro services"
+      "cta   services"
+      "tools tools";
+    grid-template-rows: auto 1fr auto;
+    column-gap: 56px;
+  }
+
+  .services-intro { grid-area: intro; }
+  .services-grid  { grid-area: services; }
+  .band-cta       { grid-area: cta; }
+  .toolbox        { grid-area: tools; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 36px;
+    align-content: start;
+  }
+
+  .service {
+    padding: 18px 0 20px;
+    border-top: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+  }
+
+  .service summary {
+    list-style: none;
+    margin-bottom: 8px;
+  }
+
+  .service summary::-webkit-details-marker { display: none; }
+
+  .service h3 { font-size: 20px; line-height: 1.25; }
+
+  .service p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--cream-soft);
+    margin: 0;
+  }
+
+  .band-link {
+    color: var(--cream);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--cream-soft);
+    text-underline-offset: 4px;
+  }
+
+  .band-link:hover { text-decoration-color: var(--cream); }
+
+  .band-cta { margin-top: 28px; }
+
+  .band-cta p {
+    margin: 0 0 14px;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;    text-wrap: balance;
+  }
+
+  .band-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 22px;
+  }
+
+  .toolbox {
+    display: flex;
+    align-items: baseline;
+    gap: 12px 20px;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+  }
+
+  .toolbox-label {
+    flex: none;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--cream-soft);
+  }
+
+  .toolbox ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toolbox li {
+    padding: 5px 12px;
+    border: 1px solid color-mix(in srgb, var(--cream) 24%, transparent);
+    border-radius: 999px;
+    font-size: 13px;
+    color: color-mix(in srgb, var(--cream) 90%, transparent);
+  }
+
+  /* contact */
+
+  /* the chips sit under the intro on desktop, and under the form on mobile */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "copy  form"
+      "links form";
+    column-gap: 56px;
+    align-items: start;
+  }
+
+  .contact-copy { grid-area: copy; }
+  .form-card { grid-area: form; }
+  .contact-links { grid-area: links; }
+
+  .contact-copy p {
+    color: var(--muted);
+    max-width: 42ch;
+    margin: 14px 0 28px;
+  }
+
+  /* contact links: a tidy grid of chips, each a platform icon and its name */
+  .contact-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 420px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* odd chip out spans the row so the grid doesn't end on a gap */
+  .contact-links li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .chip svg {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+  }
+
+  a.chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+
+  /* reminders for unfinished pieces: hidden on the live site, visible when previewing locally */
+  .todo { display: none !important; }
+  .local .todo { display: block !important; }
+
+
+  .form-card {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background-color: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  form .field { margin-bottom: 18px; }
+
+  form input,
+  form textarea {
+    width: 100%;
+    padding: 11px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  form input::placeholder,
+  form textarea::placeholder { color: var(--muted); opacity: 0.7; }
+
+  form input:focus,
+  form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
+  form textarea { min-height: 130px; resize: vertical; }
+
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  .form-foot {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .form-status {
+    margin: 0;
+    font-size: 14px;
+    color: var(--primary);
+  }
+
+  /* errors keep readable ink text and get a coral dot, like the status dots */
+  .form-status.error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink);
+  }
+
+  .form-status.error::before {
+    content: "";
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* footer: green like the nav, so the page is bookended */
+
+  footer {
+    background: var(--nav-bg);
+    color: var(--nav-text);
+  }
+
+  footer .wrap {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px 32px;
+    padding-top: 36px;
+    padding-bottom: 36px;
+    font-size: 14px;
+  }
+
+  footer .brand-word { font-size: 20px; }
+  footer .brand-mark { width: 30px; height: 30px; }
+
+  footer nav { display: flex; gap: 24px; }
+
+  footer nav a { opacity: 0.78; }
+  footer nav a:hover { opacity: 1; }
+
+  .foot-base {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--nav-border);
+    opacity: 0.72;
+  }
+
+  /* gentle reveal on scroll */
+
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .btn, .work-card, .chip, .card-link span, .slides img, .slide-dots button, .service summary::after { transition: none; }
+  }
+
+  /* mobile */
+
+  @media (max-width: 900px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-layout {
+      grid-template-columns: 1fr;
+      grid-template-areas: "intro" "services" "tools" "cta";
+      grid-template-rows: none;
+    }
+    .services-grid { margin-top: 32px; }
+    .toolbox { flex-direction: column; align-items: flex-start; }
+    .band-cta { margin-top: 40px; }
+  }
+
+  @media (max-width: 760px) {
+    section { padding: 64px 0; }
+
+    h2 { font-size: 30px; }
+
+    .header-actions { margin-left: auto; }
+
+    nav.primary-nav {
+      display: none;
+      position: absolute;
+      top: 78px;
+      right: var(--nav-pad);
+      left: auto;
+      width: 180px;
+      margin: 0;
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 10px;
       flex-direction: column;
-      /* Dot-grid, same as the v2 hero — dots follow --border so they swap with the theme */
-      background: radial-gradient(var(--border) 1.5px, transparent 2px) 0 0 / 24px 24px, var(--bg);
-      color: var(--text);
-      font-family: "Inter", system-ui, -apple-system, sans-serif;
-      font-size: 17px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      transition: background-color .3s ease, color .3s ease;
-      overflow-x: hidden;
+      align-items: stretch;
+      gap: 0;
+      padding: 8px;
+      z-index: 60;
     }
-    a { color: inherit; }
-    :focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 6px; }
 
-    /* One edge inset for the header & footer corners — same on every device */
-    :root { --edge: 24px; }
+    nav.primary-nav.open { display: flex; }
 
-    .wrap {
+    nav.primary-nav a {
+      padding: 10px 12px;
       width: 100%;
-      max-width: 1320px;
-      margin: 0 auto;
-      padding-inline: clamp(16px, 5vw, 72px);
-    }
-    /* Header/footer span the full viewport so their corners sit exactly --edge from each side */
-    .wrap.edge {
-      max-width: none;
-      padding-inline: var(--edge);
+      border-radius: 6px;
+      opacity: 1;
+      text-align: center;
     }
 
-    /* ---------- Header ---------- */
-    header {
+    nav.primary-nav a:hover { background: var(--bg); }
+
+    .menu-toggle { display: flex; }
+
+    .hero p.lede {
+      font-size: 17px;
+      max-width: 320px;
+      margin: 16px auto 32px;
+    }
+    .hero-actions { flex-wrap: wrap; }
+
+    /* the photo becomes a round byline beside the heading, and the text runs full width below */
+    .about-grid {
+      grid-template-columns: 76px 1fr;
+      column-gap: 16px;
+      row-gap: 0;
+      align-items: center;
+    }
+
+    .about-copy { display: contents; }
+    .about-portrait { width: 76px; border-radius: 50%; }
+    .about-copy h2 { margin: 0; }
+    .about-copy p { grid-column: 1 / -1; }
+    .about-copy h2 + p { margin-top: 20px; }
+
+    .work-grid { grid-template-columns: 1fr; }
+
+    /* software cards swipe sideways; the next card peeks in so it's clear there's more */
+    .work-grid.carousel {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 86%;
+      gap: 14px;
+      margin-left: -24px;
+      margin-right: -24px;
+      padding: 0 24px 6px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding: 0 24px;
+      scrollbar-width: none;
+    }
+
+    .work-grid.carousel::-webkit-scrollbar { display: none; }
+    .work-grid.carousel > * { scroll-snap-align: start; }
+
+    /* services fold into a list of titles; tap one to read it */
+    .services-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 32px; }
+    .service {
+      padding: 0;
+      border: 1px solid color-mix(in srgb, var(--cream) 20%, transparent);
+      border-radius: 10px;
+      background: rgba(31, 36, 33, .14);
+    }
+
+    .service summary {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-block: var(--edge);
-    }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 600;
-      font-size: 1.25rem;
-      letter-spacing: -.01em;
-    }
-    .brand svg { width: 34px; height: 34px; flex: none; }
-    .mark-lt { stroke: var(--green-text); }
-    .mark-gt { stroke: var(--coral); }
-    .brand .tld { color: var(--muted); font-weight: 400; }
-
-    .theme-toggle {
-      width: 40px; height: 40px;
-      display: grid; place-items: center;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
+      gap: 16px;
+      margin: 0;
+      padding: 16px 20px;
       cursor: pointer;
-      transition: transform .2s ease, border-color .2s ease;
-    }
-    .theme-toggle:hover { transform: rotate(-15deg); border-color: var(--green-text); }
-    .theme-toggle svg { width: 18px; height: 18px; }
-    .icon-sun { display: none; }
-    :root[data-theme="dark"] .icon-sun { display: block; }
-    :root[data-theme="dark"] .icon-moon { display: none; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .icon-sun { display: block; }
-      :root:not([data-theme="light"]) .icon-moon { display: none; }
     }
 
-    /* ---------- Main ---------- */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding-top: clamp(24px, 5vh, 64px);
-      padding-bottom: clamp(56px, 11vh, 128px);
-    }
+    .service h3 { font-size: 20px; }
 
-    h1 {
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 500;
-      font-optical-sizing: auto;
-      font-size: clamp(2.8rem, 7.5vw, 6.25rem);
-      line-height: 1.02;
-      letter-spacing: -.025em;
-      margin: 0 0 clamp(14px, 1.6vw, 22px);
-    }
-    h1 em { font-style: italic; color: var(--green-text); }
-
-    .lede {
-      color: var(--muted);
-      font-size: clamp(1.02rem, 0.9rem + 0.4vw, 1.25rem);
-      line-height: 1.6;
-      max-width: 36rem;
-      text-wrap: balance;
-      margin: 0 0 clamp(36px, 5vw, 64px);
-    }
-
-    /* Launch date */
-    .launch {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 18px;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .launch::before, .launch::after {
+    /* a plus that turns into a minus when open */
+    .service summary::after {
       content: "";
-      width: 32px;
-      height: 1px;
-      background: var(--border);
-    }
-    .launch time {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.05rem;
-      font-weight: 500;
-      letter-spacing: .02em;
-      text-transform: none;
-      color: var(--coral);
+      flex: none;
+      width: 14px;
+      height: 14px;
+      background:
+        linear-gradient(var(--cream), var(--cream)) center / 14px 2px no-repeat,
+        linear-gradient(var(--cream), var(--cream)) center / 2px 14px no-repeat;
+      transition: transform 0.2s ease;
     }
 
-    /* Countdown */
-    .countdown {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(8px, 1.2vw, 18px);
-      width: 100%;
-      max-width: clamp(320px, 52vw, 680px);
-    }
-    .unit {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: clamp(16px, 1.6vw, 24px);
-      padding: clamp(16px, 2.2vw, 30px) 6px clamp(12px, 1.6vw, 22px);
-      box-shadow: var(--shadow);
-    }
-    .num {
-      display: block;
-      font-family: "Fraunces", Georgia, serif;
-      font-weight: 500;
-      font-size: clamp(1.9rem, 4.6vw, 3.75rem);
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -.02em;
-    }
-    .label {
-      display: block;
-      margin-top: 8px;
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .service[open] summary::after {
+      transform: rotate(90deg);
+      background: linear-gradient(var(--cream), var(--cream)) center / 14px 2px no-repeat;
     }
 
-    .launched {
-      display: none;
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.5rem;
-      color: var(--green-text);
-    }
-    .is-live .countdown { display: none; }
-    .is-live .launched { display: block; }
+    .service p { padding: 0 20px 20px; }
 
-    /* ---------- Meta (former footer content, now under the countdown) ---------- */
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 6px 10px;
-      margin-top: clamp(28px, 3.5vw, 44px);
-      font-size: .85rem;
-      color: var(--muted);
-    }
-    .meta .sep { opacity: .5; }
-    .meta a { text-decoration: none; }
-    .meta a:hover { color: var(--green-text); }
 
-    /* ---------- Entrance ---------- */
-    .rise { opacity: 0; transform: translateY(14px); animation: rise .8s cubic-bezier(.22, 1, .36, 1) forwards; }
-    .d1 { animation-delay: .05s; } .d2 { animation-delay: .15s; } .d3 { animation-delay: .25s; }
-    .d4 { animation-delay: .35s; } .d5 { animation-delay: .45s; }
-    @keyframes rise { to { opacity: 1; transform: none; } }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition: none !important; }
-      .rise { opacity: 1; transform: none; }
+    .contact-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+      grid-template-areas: "copy" "form" "links";
     }
-  </style>
+    .contact-links { margin-top: 24px; max-width: none; }
+    .form-card { padding: 20px; }
+
+    footer .wrap { grid-template-columns: 1fr; }
+    footer nav { flex-wrap: wrap; gap: 12px 20px; }
+    .foot-base { flex-direction: column; gap: 4px; }
+  }
+</style>
 </head>
 <body>
-  <div class="wrap edge">
-    <header>
-      <a class="brand" href="/" aria-label="cayson.dev home">
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-          <path class="mark-lt" d="M33 12 L13 32 L33 52" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-          <path class="mark-gt" d="M41 25 L50 32 L41 39" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <span>cayson<span class="tld">.dev</span></span>
-      </a>
-      <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="cayson.dev home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path class="mark-lt" d="M33 12 L13 32 L33 52" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="mark-gt" d="M41 25 L50 32 L41 39" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">cayson<span class="tld">.dev</span></span>
+    </a>
+    <nav class="primary-nav" id="primary-nav">
+      <a href="#about">About</a>
+      <a href="#software">Software</a>
+      <a href="#websites">Websites</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
-    </header>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
   </div>
+</header>
 
-  <div class="wrap" style="flex:1;display:flex;">
-    <main id="launch" style="width:100%;">
-      <h1 class="rise d1">Pardon the <em>dust.</em></h1>
-      <p class="lede rise d3">I'm taking the time to redesign my site from the ground up, to allow my projects to be seen in the best way possible.</p>
+<main id="top">
 
-      <p class="launch rise d4">Arriving <time datetime="2026-10-30">10/30/26</time></p>
-
-      <div class="countdown rise d5" role="timer" aria-live="off" aria-label="Countdown to launch">
-        <div class="unit"><span class="num" id="cd-days">--</span><span class="label">Days</span></div>
-        <div class="unit"><span class="num" id="cd-hours">--</span><span class="label">Hours</span></div>
-        <div class="unit"><span class="num" id="cd-mins">--</span><span class="label">Minutes</span></div>
-        <div class="unit"><span class="num" id="cd-secs">--</span><span class="label">Seconds</span></div>
+  <section class="hero">
+    <div class="wrap">
+      <h1><span class="line">Hey, I'm Cayson.</span> <span class="line line-2">Let's Build.</span></h1>
+      <p class="lede">Louisiana Tech CS student, designer, and developer.</p>
+      <div class="hero-actions">
+        <a href="#software" class="btn btn-primary">See the work</a>
+        <a href="#contact" class="btn btn-secondary">Get in touch</a>
       </div>
-      <p class="launched">It's here — refresh to see the new site.</p>
+    </div>
+  </section>
 
-      <div class="meta rise d5">
-        <span>&copy; <span id="year">2026</span> cayson.dev</span>
-        <span class="sep" aria-hidden="true">·</span>
-        <a href="mailto:hello@cayson.dev">hello@cayson.dev</a>
+  <section id="about">
+    <div class="wrap reveal">
+      <div class="about-grid">
+        <img class="about-portrait" src="assets/portrait.jpg" alt="Cayson Martin" width="400" height="400">
+        <div class="about-copy">
+          <h2>About</h2>
+          <p>I'm Cayson Martin, a CS student at Louisiana Tech juggling classes, a job, and more side projects than is probably reasonable. I've run my own homelab out of my apartment, with everything from Pi-hole to my own cloud storage, and I still like knowing what's happening under the hood.</p>
+          <p>Outside of code, I love to work out and play basketball. I'm also really into music. I play piano and keys, guitar, a little bass, and could probably figure out several more. And I make coffee probably a bit more than I should.</p>
+        </div>
       </div>
-    </main>
+    </div>
+  </section>
+
+  <section id="software">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Software</h2>
+        <p class="section-lede">Apps and experiments I've built for class and for fun, plus what I'm working on right now.</p>
+      </div>
+
+      <div class="work-grid work-grid-two carousel reveal">
+        <article class="work-card tint-blue">
+          <div class="thumb slideshow">
+            <div class="slides">
+              <img src="assets/johndndmain.png" alt="John DnD with a character sheet, a rolled d20, and stat modifiers" width="1600" height="900">
+              <img src="assets/johndndsettings.png" alt="John DnD settings, switching the dice to the Forest color theme" width="1600" height="900" loading="lazy">
+            </div>
+            <span class="thumb-label" aria-hidden="true">John DnD</span>
+            <div class="slide-dots" role="group" aria-label="John DnD screenshots"></div>
+          </div>
+          <div class="card-body">
+            <h3>John DnD</h3>
+            <p>A desktop app for running Dungeons &amp; Dragons games, built with a classmate. It has an animated dice roller, a sidebar for switching between character sheets, and color themes you can tweak down to the dice. Your campaign and settings save between sessions.</p>
+            <div class="card-foot">
+              <span class="tag">Python, PyQt6, team project</span>
+              <span class="status live">Done</span>
+            </div>
+          </div>
+        </article>
+        <article class="work-card tint-forest">
+          <!-- In-progress thumbnail: a checklist of what works and what's next, instead of screenshots.
+               When Stave is ready to show, swap this for a slideshow block like John DnD's,
+               with images such as assets/projects/stave-1.png. -->
+          <div class="thumb wip">
+            <span class="wip-title" aria-hidden="true">Stave</span>
+            <ul class="wip-list" aria-label="Stave progress">
+              <li class="done">Splits a song into instrument tracks</li>
+              <li class="done">Pulls the notes out as MIDI</li>
+              <li class="done">Writes chord charts and lead sheets</li>
+              <li class="next">Tuning the model for accuracy</li>
+              <li class="next">Building a front end</li>
+            </ul>
+          </div>
+          <div class="card-body">
+            <h3>Stave</h3>
+            <p>Turns a recording into sheet music. The engine runs from the command line for now, and it's built with songwriters in mind.</p>
+            <div class="card-foot">
+              <span class="tag">Python, audio, ML</span>
+              <span class="status">In progress</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="websites">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>Websites</h2>
+        <p class="section-lede">Sites I've designed and built for clients, plus demos of what I can do.</p>
+      </div>
+
+      <div class="work-grid work-grid-two reveal">
+        <!-- A client site or demo. Say what you built, for whom, and what changed for them.
+             Delete the "Need a website?" card once there are two of these.
+        <article class="work-card tint-forest">
+          <div class="thumb slideshow">
+            <div class="slides">
+              <img src="assets/websites/client-1.png" alt="Client name home page">
+            </div>
+            <span class="thumb-label" aria-hidden="true">Client name</span>
+            <div class="slide-dots" role="group" aria-label="Client name screenshots"></div>
+          </div>
+          <div class="card-body">
+            <h3>Client name</h3>
+            <p>What I built, who it's for, and what changed for them after launch.</p>
+            <div class="card-foot">
+              <span class="tag">Design, build, hosting</span>
+              <a class="card-link" href="https://example.com" target="_blank" rel="noopener">Visit site</a>
+            </div>
+          </div>
+        </article>
+        -->
+        <a href="#contact" class="work-card empty">
+          <h3>Need a website?</h3>
+          <p>Client sites and demos are on the way. Tell me what you need and I'll give you a straight answer on cost and timing.</p>
+          <span class="card-link">Tell me about it</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="band">
+    <div class="wrap services-layout">
+      <div class="services-intro reveal">
+        <h2>What I bring</h2>
+        <p class="section-lede">I'm happiest somewhere between design and code. I'll sketch the screen, build it, write the script that keeps it running, and set up the server it lives on.</p>
+      </div>
+
+      <div class="services-grid reveal">
+        <details class="service" open>
+          <summary><h3>UI/UX design</h3></summary>
+          <p>I like to start with how something should feel to use, then get picky about spacing, type, and color. This site's brand, from the logo to the palette, is my own work.</p>
+        </details>
+        <details class="service" open>
+          <summary><h3>Web &amp; app development</h3></summary>
+          <p>Fast, hand-coded websites with no page builder to babysit. Past the browser, I've played with SwiftUI and built a desktop app in Python.</p>
+        </details>
+        <details class="service" open>
+          <summary><h3>Scripting &amp; automation</h3></summary>
+          <p>If I do something twice, I'd rather script it. I use Python and Bash for everything from machine learning to the small jobs that keep a server tidy.</p>
+        </details>
+        <details class="service" open>
+          <summary><h3>Infrastructure &amp; troubleshooting</h3></summary>
+          <p>I've run my own Linux servers and deploy through Cloudflare. I've been fixing things my whole life, so tracking down what broke is second nature.</p>
+        </details>
+      </div>
+
+      <div class="band-cta reveal">
+        <p>Hiring, or have a project in mind?</p>
+        <div class="band-cta-actions">
+          <a href="#contact" class="btn btn-light">Let's talk</a>
+          <a class="band-link" href="resume.html">See my résumé</a>
+        </div>
+      </div>
+
+      <div class="toolbox reveal">
+        <span class="toolbox-label">Tools I reach for</span>
+        <ul>
+          <li>Python</li>
+          <li>Java</li>
+          <li>Swift &amp; SwiftUI</li>
+          <li>HTML, CSS &amp; JavaScript</li>
+          <li>Bash</li>
+          <li>Linux</li>
+          <li>Proxmox</li>
+          <li>Docker</li>
+          <li>Git</li>
+          <li>Cloudflare</li>
+          <li>Pixelmator Pro</li>
+          <li>Rust (learning)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap reveal">
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <h2>Let's talk</h2>
+          <p>Hiring for an internship or a role, need something designed or built, or just want to talk shop? Send me a note and I'll get back to you soon.</p>
+        </div>
+        <div class="form-card">
+          <form id="contact-form" action="https://formspree.io/f/mlgvzaqp" method="POST">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell me about the role or the project" required></textarea>
+            </div>
+            <div class="hp" aria-hidden="true">
+              <label for="_gotcha">Leave this empty</label>
+              <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="form-foot">
+              <button type="submit" class="btn btn-primary" id="contact-submit">Send message</button>
+              <p class="form-status" id="contact-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+        <ul class="contact-links">
+          <li>
+            <a class="chip" href="mailto:hello@cayson.dev" title="hello@cayson.dev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email
+            </a>
+          </li>
+          <li>
+            <a class="chip" href="resume.html" title="Résumé">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+              Résumé
+            </a>
+          </li>
+          <li>
+            <a class="chip" href="https://www.linkedin.com/in/cayson-martin-7936a9447/" target="_blank" rel="noopener" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a class="chip" href="https://github.com/QuesoBlanco15" target="_blank" rel="noopener" title="github.com/QuesoBlanco15">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a class="chip" href="https://www.instagram.com/cayson.dev/" target="_blank" rel="noopener" title="@cayson.dev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></svg>
+              Instagram
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="cayson.dev home">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path class="mark-lt" d="M33 12 L13 32 L33 52" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="mark-gt" d="M41 25 L50 32 L41 39" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">cayson<span class="tld">.dev</span></span>
+    </a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#software">Software</a>
+      <a href="#websites">Websites</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="foot-base">
+      <span>&copy; <span id="year">2026</span> Cayson Martin</span>
+      <span>Designed and built by cayson.dev</span>
+    </div>
   </div>
+</footer>
 
-  <script>
-    (function () {
-      var root = document.documentElement;
+<script>
+  const root = document.documentElement;
 
-      // Theme toggle — remembers choice when storage is available
-      try {
-        var saved = localStorage.getItem("theme");
-        if (saved === "light" || saved === "dark") root.setAttribute("data-theme", saved);
-      } catch (e) {}
+  /* theme toggle */
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
 
-      document.querySelector(".theme-toggle").addEventListener("click", function () {
-        var current = root.getAttribute("data-theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-        var next = current === "dark" ? "light" : "dark";
-        root.setAttribute("data-theme", next);
-        try { localStorage.setItem("theme", next); } catch (e) {}
+  /* mobile menu */
+  const menuToggle = document.getElementById('menu-toggle');
+  const primaryNav = document.getElementById('primary-nav');
+  const header = document.querySelector('header');
+  menuToggle.addEventListener('click', () => {
+    const open = primaryNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open);
+  });
+
+  primaryNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      primaryNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', false);
+    });
+  });
+
+  /* hide the nav on scroll down, bring it back on scroll up */
+  let lastScrollY = window.scrollY;
+
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+
+    if (currentY <= 10) {
+      header.classList.remove('hidden');
+    } else if (currentY > lastScrollY && !primaryNav.classList.contains('open')) {
+      header.classList.add('hidden');
+    } else {
+      header.classList.remove('hidden');
+    }
+
+    lastScrollY = currentY;
+  }, { passive: true });
+
+  /* reveal sections as they scroll in */
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
 
-      document.getElementById("year").textContent = new Date().getFullYear();
+  /* contact form: send to Formspree without leaving the page */
+  const form = document.getElementById('contact-form');
+  const submit = document.getElementById('contact-submit');
+  const status = document.getElementById('contact-status');
 
-      // Countdown — midnight Central Time, Oct 30, 2026
-      var LAUNCH = new Date("2026-10-30T00:00:00-05:00").getTime();
-      var main = document.getElementById("launch");
-      var els = {
-        d: document.getElementById("cd-days"),
-        h: document.getElementById("cd-hours"),
-        m: document.getElementById("cd-mins"),
-        s: document.getElementById("cd-secs")
-      };
-      function pad(n) { return n < 10 ? "0" + n : String(n); }
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    submit.disabled = true;
+    submit.textContent = 'Sending…';
+    status.className = 'form-status';
+    status.textContent = '';
 
-      function tick() {
-        var diff = LAUNCH - Date.now();
-        if (diff <= 0) {
-          main.classList.add("is-live");
-          clearInterval(timer);
-          return;
-        }
-        var s = Math.floor(diff / 1000);
-        els.d.textContent = pad(Math.floor(s / 86400));
-        els.h.textContent = pad(Math.floor(s % 86400 / 3600));
-        els.m.textContent = pad(Math.floor(s % 3600 / 60));
-        els.s.textContent = pad(s % 60);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      submit.textContent = 'Sent';
+      status.textContent = "Got it, I'll be in touch soon.";
+      setTimeout(() => { submit.textContent = 'Send message'; submit.disabled = false; }, 4000);
+    } catch (err) {
+      submit.textContent = 'Send message';
+      submit.disabled = false;
+      status.className = 'form-status error';
+      status.textContent = 'The message didn’t send. Email hello@cayson.dev instead.';
+    }
+  });
+
+  /* project screenshot slideshows: nothing moves on its own. Hovering flips through
+     the screenshots, clicking the picture or a dot changes it, and with no images yet
+     it falls back to the dot-grid panel */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('.slideshow').forEach(show => {
+    const dots = show.querySelector('.slide-dots');
+    const interval = parseInt(show.dataset.interval, 10) || 2500;
+    let imgs = [];
+    let current = 0;
+    let timer = null;
+    let hovering = false;
+
+    const go = i => {
+      if (!imgs.length) return;
+      current = (i + imgs.length) % imgs.length;
+      imgs.forEach((img, n) => img.classList.toggle('active', n === current));
+      dots.querySelectorAll('button').forEach((d, n) => {
+        d.classList.toggle('active', n === current);
+        d.setAttribute('aria-current', n === current ? 'true' : 'false');
+      });
+    };
+
+    const stop = () => { clearInterval(timer); timer = null; };
+    const start = () => {
+      stop();
+      if (imgs.length > 1 && hovering && !reduceMotion) {
+        timer = setInterval(() => go(current + 1), interval);
       }
-      var timer = setInterval(tick, 1000);
-      tick();
-    })();
-  </script>
+    };
+
+    const setup = () => {
+      // drop images that already failed to load before this script ran
+      show.querySelectorAll('.slides img').forEach(img => {
+        if (img.complete && img.naturalWidth === 0) img.remove();
+      });
+      imgs = [...show.querySelectorAll('.slides img')];
+      show.classList.toggle('has-slides', imgs.length > 0);
+      show.classList.toggle('can-advance', imgs.length > 1);
+      dots.innerHTML = '';
+      if (imgs.length > 1) {
+        imgs.forEach((img, n) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Show screenshot ' + (n + 1));
+          b.addEventListener('click', () => { go(n); start(); });
+          dots.appendChild(b);
+        });
+      }
+      go(Math.min(current, Math.max(imgs.length - 1, 0)));
+      start();
+    };
+
+    // a missing or broken screenshot just drops out of the rotation
+    show.querySelectorAll('.slides img').forEach(img => {
+      img.addEventListener('error', () => { img.remove(); setup(); });
+    });
+
+    show.addEventListener('mouseenter', () => { hovering = true; start(); });
+    show.addEventListener('mouseleave', () => { hovering = false; stop(); });
+
+    // the dots handle their own clicks
+    show.addEventListener('click', e => {
+      if (imgs.length > 1 && !e.target.closest('.slide-dots')) { go(current + 1); start(); }
+    });
+
+    setup();
+  });
+
+  /* services: all open on desktop, folded into tappable titles on mobile */
+  const mobile = window.matchMedia('(max-width: 760px)');
+  const services = document.querySelectorAll('details.service');
+  const syncServices = () => services.forEach(d => { d.open = !mobile.matches; });
+  services.forEach(d => {
+    d.querySelector('summary').addEventListener('click', e => {
+      if (!mobile.matches) e.preventDefault();
+    });
+  });
+  syncServices();
+  mobile.addEventListener('change', syncServices);
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
