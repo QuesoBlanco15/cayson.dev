@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résumé | Cayson Martin</title>
+<meta name="description" content="Cayson Martin's résumé as a timeline: jobs, projects, and school, with what each one taught him. Download the PDF for the standard version.">
+<link rel="canonical" href="https://cayson.dev/resume.html">
+<meta name="theme-color" content="#2E5E3E">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+<!-- Same theme as the main site: saved choice, otherwise the visitor's system setting.
+     Also marks that JavaScript is running, so the filters only show when they work -->
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+    document.documentElement.classList.add('js');
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500&display=swap">
+
+<!-- On screen this page is the timeline. In print it's a standard résumé (the .sheet at the bottom),
+     and resume.pdf is printed from it. After editing the sheet, rebuild the PDF from this folder:
+     weasyprint resume.html resume.pdf -->
+<style>
+  /* design language v2 tokens, the same as index.html */
+  :root {
+    --bg: #F1E8D6;
+    --surface: #F8F2E6;
+    --ink: #1F2421;
+    --muted: #5E665F;
+    --primary: #2E5E3E;
+    --secondary: #3B6E80;
+    --accent: #D9603F;
+    --border: #E0D3BC;
+
+    --forest: #2E5E3E;
+    --cream: #F6F1E7;
+    --accent-on-forest: #F08A6C;
+    --nav-border: color-mix(in srgb, var(--cream) 22%, transparent);
+
+    --shadow: 0 1px 2px rgba(31, 36, 33, .04), 0 12px 28px -16px rgba(31, 36, 33, .22);
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    --bg: #15191C;
+    --surface: #1D2226;
+    --ink: #EDE6D8;
+    --muted: #A3AAA2;
+    --primary: #86B893;
+    --secondary: #86B4C4;
+    --accent: #F08A6C;
+    --border: #2C3338;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 28px -16px rgba(0, 0, 0, .55);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  a { color: inherit; }
+
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 4px; }
+  header :focus-visible { outline-color: var(--cream); }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+
+  /* the green bar from the main site, with the way back and the download */
+
+  header {
+    background: var(--forest);
+    color: var(--cream);
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .bar {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .brand-mark { width: 30px; height: 30px; flex: none; }
+  .brand-mark .mark-lt { stroke: var(--cream); }
+  .brand-mark .mark-gt { stroke: var(--accent-on-forest); }
+
+  .brand-word {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-word .tld { color: var(--accent-on-forest); }
+
+  /* light button on green, per the design language */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 8px;
+    background: var(--cream);
+    color: var(--forest);
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .45); }
+  .btn svg { width: 18px; height: 18px; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 48px 20px 88px; }
+
+  /* intro: photo, name, and how to use the page */
+
+  .intro {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .intro img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  .intro h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; }
+  .intro .lede { color: var(--muted); margin: 6px 0 10px; max-width: 58ch; }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+  }
+
+  .contact a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--primary) 35%, transparent);
+    text-underline-offset: 3px;
+  }
+
+  .contact a:hover { text-decoration-color: var(--primary); }
+
+  /* filters double as the color key: work is green, projects blue, school coral */
+
+  .work    { --c: var(--primary); }
+  .project { --c: var(--secondary); }
+  .school  { --c: var(--accent); }
+
+  .filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 40px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .js .filters { display: flex; }
+
+  .filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+    font: 500 14px 'Inter', sans-serif;
+    cursor: pointer;
+  }
+
+  .filter:hover { border-color: var(--muted); }
+
+  .filter[aria-pressed="true"] {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--cream);
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--c);
+    flex: none;
+  }
+
+  .filter[aria-pressed="true"] .swatch { box-shadow: 0 0 0 2px var(--cream); }
+
+  .hint { color: var(--muted); font-size: 14px; margin-top: 12px; }
+
+  /* the timeline: a rail down the left, a dot per entry in its category's color */
+
+  .timeline {
+    position: relative;
+    margin-top: 12px;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 28px;
+    bottom: 24px;
+    width: 2px;
+    border-radius: 2px;
+    background: var(--border);
+  }
+
+  .year {
+    position: relative;
+    font-size: 22px;
+    color: var(--muted);
+    margin: 28px 0 12px;
+  }
+
+  .year::before {
+    content: "";
+    position: absolute;
+    left: -29px;
+    top: 50%;
+    width: 12px;
+    height: 2px;
+    background: var(--border);
+  }
+
+  .entries {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entry { position: relative; }
+
+  .entry::before {
+    content: "";
+    position: absolute;
+    left: -31px;
+    top: 21px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--c);
+    box-shadow: 0 0 0 4px var(--bg);
+  }
+
+  /* not started yet: a hollow dot */
+  .entry.next::before { background: var(--bg); border: 2px solid var(--c); }
+
+  .entry details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--c);
+    border-radius: 10px;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .entry details:hover,
+  .entry details[open] { box-shadow: var(--shadow); }
+
+  .entry summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 16px;
+    padding: 14px 18px;
+    cursor: pointer;
+    list-style: none;
+    border-radius: 8px;
+  }
+
+  .entry summary::-webkit-details-marker { display: none; }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+    color: var(--muted);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cat { display: inline-flex; align-items: center; gap: 6px; }
+
+  .entry h3 { font-size: 20px; letter-spacing: -0.01em; line-height: 1.3; }
+  .org { color: var(--muted); font-size: 14px; }
+
+  .chev {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+
+  details[open] .chev { transform: rotate(180deg); }
+
+  /* the summary that opens up */
+
+  .detail {
+    margin: 0 18px;
+    padding: 4px 0 18px;
+    border-top: 1px dashed var(--border);
+  }
+
+  details[open] .detail { animation: open 0.25s ease; }
+
+  @keyframes open {
+    from { opacity: 0; transform: translateY(-6px); }
+  }
+
+  .detail h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    margin: 14px 0 4px;
+  }
+
+  .detail p { max-width: 64ch; }
+  .detail p + p { margin-top: 8px; }
+
+  .detail img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-top: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    font-size: 13px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--c) 28%, transparent);
+  }
+
+  .pdf-note { margin-top: 40px; color: var(--muted); font-size: 14px; }
+  .pdf-note a { color: var(--primary); text-underline-offset: 3px; }
+
+  /* the standard résumé only exists on paper */
+  .sheet { display: none; }
+
+  @media (max-width: 640px) {
+    .bar { padding: 12px 16px; }
+    .brand-word { display: none; }
+    main { padding: 32px 16px 64px; }
+    .intro { grid-template-columns: 1fr; gap: 14px; }
+    .intro img { width: 76px; height: 76px; }
+    .intro h1 { font-size: 32px; }
+    .timeline { padding-left: 26px; }
+    .timeline::before { left: 5px; }
+    .entry::before { left: -27px; width: 12px; height: 12px; top: 22px; }
+    .year::before { left: -23px; width: 10px; }
+    .entry summary { padding: 12px 14px; }
+    .detail { margin: 0 14px; }
+    .entry h3 { font-size: 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn, .entry details, .chev { transition: none; }
+    details[open] .detail { animation: none; }
+  }
+
+  /* the PDF: a standard one-page résumé on letter paper, always in the light colors */
+
+  @page { size: letter; margin: 0.35in 0.55in; }
+
+  @media print {
+    :root, [data-theme="dark"] {
+      --bg: #FFFFFF;
+      --surface: #FFFFFF;
+      --ink: #1F2421;
+      --muted: #5E665F;
+      --primary: #2E5E3E;
+      --border: #E3DACB;
+      color-scheme: light;
+    }
+
+    body { font-size: 9.5pt; line-height: 1.3; }
+    header, .screen { display: none; }
+    main { max-width: none; padding: 0; }
+
+    .sheet { display: block; }
+
+    .head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 14pt;
+      padding-bottom: 10pt;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .head img { width: 56pt; height: 56pt; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+    .head h1 { font-size: 22pt; line-height: 1.1; letter-spacing: -0.02em; }
+    .tagline { margin: 2pt 0 5pt; color: var(--muted); }
+    .contact { font-size: 9.5pt; gap: 2pt 14pt; }
+
+    .sheet section { padding-top: 8pt; }
+    .sheet h2 { font-size: 12.5pt; letter-spacing: -0.01em; color: var(--primary); margin-bottom: 3pt; }
+    .sheet h3 { font-size: 10.5pt; letter-spacing: -0.005em; }
+
+    .item { break-inside: avoid; }
+    .item + .item { margin-top: 6pt; }
+
+    .item-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .when { color: var(--muted); font-size: 9pt; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .where { color: var(--muted); font-size: 9pt; }
+
+    ul.points { margin: 2pt 0 0; padding-left: 18px; }
+    ul.points li { margin: 0; padding-left: 2px; }
+    ul.points li::marker { color: var(--muted); }
+
+    .skills { margin: 0; padding: 0; list-style: none; }
+    .skills li + li { margin-top: 3pt; }
+    .skills strong { font-weight: 500; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <a href="/" class="brand" aria-label="Back to cayson.dev">
+      <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path class="mark-lt" d="M33 12 L13 32 L33 52" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="mark-gt" d="M41 25 L50 32 L41 39" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">cayson<span class="tld">.dev</span></span>
+    </a>
+    <a class="btn" href="resume.pdf" download="Cayson_Martin_Resume.pdf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Download PDF
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="screen">
+
+    <div class="intro">
+      <img src="assets/portrait.jpg" alt="Cayson Martin" width="400" height="400">
+      <div>
+        <h1>Cayson Martin</h1>
+        <p class="lede">My résumé as a timeline: the jobs, projects, and classes that got me here, and what each one taught me.</p>
+        <ul class="contact">
+          <li><a href="mailto:hello@cayson.dev">hello@cayson.dev</a></li>
+          <li><a href="https://www.linkedin.com/in/cayson-martin-7936a9447/">LinkedIn</a></li>
+          <li><a href="https://github.com/QuesoBlanco15">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <ul class="filters" aria-label="Show">
+      <li><button type="button" class="filter" data-filter="all" aria-pressed="true">Everything</button></li>
+      <li><button type="button" class="filter work" data-filter="work" aria-pressed="false"><span class="swatch" aria-hidden="true"></span>Work</button></li>
+      <li><button type="button" class="filter project" data-filter="project" aria-pressed="false"><span class="swatch" aria-hidden="true"></span>Projects</button></li>
+      <li><button type="button" class="filter school" data-filter="school" aria-pressed="false"><span class="swatch" aria-hidden="true"></span>School</button></li>
+    </ul>
+    <p class="hint">Tap anything to see what I did and what it taught me.</p>
+
+    <!-- One <li class="entry ..."> per thing, grouped by the year it started, newest first.
+         The class picks the color: work, project, or school. Add "next" for things that haven't started -->
+    <div class="timeline">
+
+      <section class="year-group">
+        <h2 class="year">Up next</h2>
+        <ol class="entries">
+          <li class="entry school next">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>School</span><span>Nov 2026 – Feb 2027</span></span>
+                <h3>Next quarter</h3>
+                <span class="org">Louisiana Tech</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I'm taking</h4>
+                <p>Systems Programming, Intro to Digital Design, and Intro to Microprocessors.</p>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section class="year-group">
+        <h2 class="year">2026</h2>
+        <ol class="entries">
+          <li class="entry work">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Work</span><span>Sep 2026 – Now</span></span>
+                <h3>Technician</h3>
+                <span class="org">Tech4Tech · Ruston, LA</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I do</h4>
+                <p>I repair phones, laptops, PCs, and tablets. I also handle customers and take payments.</p>
+                <h4>What it taught me</h4>
+                <p>That I love beautiful design, just in general. I love looking at the internals of a MacBook, or the beautiful, intuitive UI of an app.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Hardware repair</li><li>Troubleshooting</li><li>Customer service</li><li>Payments</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry project">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Project</span><span>Sep 2026 – Now</span></span>
+                <h3>Stave</h3>
+                <span class="org">Turns a recording into sheet music</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I'm building</h4>
+                <p>An engine that splits a song into instrument tracks, pulls the notes out as MIDI, and writes chord charts and lead sheets. It runs from the command line for now. Next up is tuning the model and building a front end.</p>
+                <h4>What it's teaching me</h4>
+                <p>The basics of machine learning, and how to learn a library even when it doesn't have much documentation.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Python</li><li>Audio processing</li><li>Machine learning</li><li>MIDI</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry school">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>School</span><span>Sep – Nov 2026</span></span>
+                <h3>Data Structures</h3>
+                <span class="org">Louisiana Tech</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What it covers</h4>
+                <p>Trees, heaps, and advanced sorting.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Data structures</li><li>Algorithms</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry project">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Project</span><span>Feb – May 2026</span></span>
+                <h3>John DnD</h3>
+                <span class="org">A desktop app for running D&amp;D games, built with a classmate</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I built</h4>
+                <p>An animated dice roller, a sidebar for switching between character sheets, and color themes you can tweak down to the dice. Your campaign and settings save between sessions.</p>
+                <h4>What it taught me</h4>
+                <p>First, the development workflow: the cycle of Git. Second, how to work with a team, and how to lead one.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Python</li><li>PyQt6</li><li>Git</li><li>Team leadership</li><li>UI design</li></ul>
+                <img src="assets/johndndmain.png" alt="John DnD with a character sheet, a rolled d20, and stat modifiers" width="1600" height="900" loading="lazy">
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section class="year-group">
+        <h2 class="year">2025</h2>
+        <ol class="entries">
+          <li class="entry project">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Project</span><span>Dec 2025 – Now</span></span>
+                <h3>cayson.dev</h3>
+                <span class="org">My brand, and the site you're on</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I built</h4>
+                <p>The brand behind my projects and freelance work: the logo, the colors, the type, and this site, designed and built by hand and hosted on Cloudflare.</p>
+                <h4>What it taught me</h4>
+                <p>Brand design. Everything from the colors to the logo was chosen to fit the brand I want to build for myself.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Brand design</li><li>UI design</li><li>HTML &amp; CSS</li><li>JavaScript</li><li>Cloudflare</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry project">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Project</span><span>Nov 2025 – Now</span></span>
+                <h3>Homelab</h3>
+                <span class="org">My own servers, run out of my apartment</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I built</h4>
+                <p>A Proxmox server running my own services in containers, from Pi-hole to my own cloud storage. Each one is exposed through a Cloudflare Tunnel, and Tailscale lets me reach everything remotely and privately. It's paused for now, but it's never really done.</p>
+                <h4>What it taught me</h4>
+                <p>Networking, first and foremost. Routing each container through Proxmox, exposing it through a Cloudflare Tunnel, and setting up Tailscale teaches you a ton.</p>
+                <p>It also taught me to define scope. At the start I wanted everything, and I wanted it perfect the first time, so I sank hours into one piece before moving on. Now I work v1 first: cut the scope to the core, build v1, pick the next set of features, and repeat.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Proxmox</li><li>Linux</li><li>Networking</li><li>Cloudflare Tunnel</li><li>Tailscale</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry school">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>School</span><span>Sep 2025 – Now</span></span>
+                <h3>Louisiana Tech University</h3>
+                <span class="org">B.S. in Computer Science · Ruston, LA</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>Where I'm at</h4>
+                <p>Working toward a Bachelor of Science in Computer Science, with a 3.5 GPA.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry work">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Work</span><span>Jun 2025 – Aug 2026</span></span>
+                <h3>Barista</h3>
+                <span class="org">Four Points Coffee Co. · El Dorado, AR</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I did</h4>
+                <p>Made drinks and handled orders in a busy coffee shop, keeping both speed and quality up while following health and safety standards.</p>
+                <h4>What it taught me</h4>
+                <p>That there's beauty in the process. Sometimes customers enjoy the quality of the process just as much as the end product.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Customer service</li><li>Time management</li><li>Multitasking</li><li>Health and safety</li></ul>
+              </div>
+            </details>
+          </li>
+
+          <li class="entry work">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Work</span><span>Jun 2025 – Aug 2026</span></span>
+                <h3>Customer Service / Sales Rep</h3>
+                <span class="org">WalkingCanes.com · El Dorado, AR</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I did</h4>
+                <p>Answered customer questions, figured out what each person needed, and processed sales on a POS system.</p>
+                <h4>What it taught me</h4>
+                <p>How to sell, and that there's skill in the marketing behind the product.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Sales</li><li>Customer service</li><li>Communication</li><li>POS systems</li></ul>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section class="year-group">
+        <h2 class="year">2024</h2>
+        <ol class="entries">
+          <li class="entry work">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Work</span><span>May – Aug 2024</span></span>
+                <h3>Cabinetmaker and Installer</h3>
+                <span class="org">El Dorado Cabinets · El Dorado, AR</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I did</h4>
+                <p>Built and installed custom cabinets from blueprints and technical drawings, on my own and with a crew.</p>
+                <h4>What it taught me</h4>
+                <p>The need for hard work and attention to detail. It also fostered a perfectionist mentality.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Reading blueprints</li><li>Precision work</li><li>Quality control</li><li>Teamwork</li></ul>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section class="year-group">
+        <h2 class="year">2023</h2>
+        <ol class="entries">
+          <li class="entry work">
+            <details>
+              <summary>
+                <span class="meta"><span class="cat"><span class="swatch" aria-hidden="true"></span>Work</span><span>Jun – Dec 2023</span></span>
+                <h3>Bobarista</h3>
+                <span class="org">Wildcat Bubble Tea · El Dorado, AR</span>
+                <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </summary>
+              <div class="detail">
+                <h4>What I did</h4>
+                <p>My first job. I made drinks, trained new hires, and helped keep inventory and daily operations running smoothly.</p>
+                <h4>What it taught me</h4>
+                <p>Attention to detail, how to interact with customers, and the importance of a clean workspace.</p>
+                <h4>Skills</h4>
+                <ul class="tags"><li>Customer service</li><li>Training</li><li>Inventory</li><li>Cleanliness</li></ul>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+    </div>
+
+    <p class="pdf-note">Need the standard version? <a href="resume.pdf" download="Cayson_Martin_Resume.pdf">Download my résumé as a PDF</a>.</p>
+  </div>
+
+  <!-- The standard résumé. Hidden on screen; this is what prints and what resume.pdf is built from -->
+  <article class="sheet">
+
+    <div class="head">
+      <img src="assets/portrait.jpg" alt="Cayson Martin" width="400" height="400">
+      <div>
+        <h1>Cayson Martin</h1>
+        <p class="tagline">Computer Science student at Louisiana Tech · Ruston, LA</p>
+        <ul class="contact">
+          <li><a href="mailto:hello@cayson.dev">hello@cayson.dev</a></li>
+          <li><a href="https://cayson.dev">cayson.dev</a></li>
+          <li><a href="https://www.linkedin.com/in/cayson-martin-7936a9447/">LinkedIn</a></li>
+          <li><a href="https://github.com/QuesoBlanco15">github.com/QuesoBlanco15</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <section>
+      <h2>Education</h2>
+      <div class="item">
+        <div class="item-top">
+          <h3>Louisiana Tech University</h3>
+          <span class="when">GPA 3.5</span>
+        </div>
+        <p class="where">Bachelor of Science in Computer Science · Ruston, LA</p>
+        <p>Relevant coursework: Data Structures</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Professional summary</h2>
+      <p>Reliable, hard-working Computer Science student at Louisiana Tech University with experience across customer service, retail, and hands-on technical work. Comfortable picking up new tools and procedures fast, staying organized under pressure, and consistently delivering solid work in fast-paced, team-oriented settings. Seeking full-time or part-time employment to fit around a full course load.</p>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <ul class="skills">
+        <li><strong>Customer service:</strong> Time management, teamwork, clear communication, attention to detail, problem-solving</li>
+        <li><strong>Operations:</strong> POS systems, inventory management, quality control, multitasking in fast-paced settings</li>
+        <li><strong>Technical (familiar with):</strong> Basic web development (HTML/CSS, JavaScript), Python, Java, Git</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Work experience</h2>
+
+      <div class="item">
+        <div class="item-top">
+          <h3>Technician</h3>
+          <span class="when">September 2026 – Present</span>
+        </div>
+        <p class="where">Tech4Tech · Ruston, LA</p>
+        <ul class="points">
+          <li>Diagnose and repair phones, laptops, PCs, and tablets.</li>
+          <li>Handle customer service and process payments.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-top">
+          <h3>Barista</h3>
+          <span class="when">June 2025 – August 2026</span>
+        </div>
+        <p class="where">Four Points Coffee Co. · El Dorado, AR</p>
+        <ul class="points">
+          <li>Delivered consistent, high-quality service in a fast-paced environment, balancing accuracy and speed.</li>
+          <li>Demonstrated strong time management and multitasking while handling customer orders and equipment operation.</li>
+          <li>Maintained organized workflows and adhered to health and safety standards.</li>
+          <li>Built communication and problem-solving skills by addressing customer needs efficiently.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-top">
+          <h3>Customer Service / Sales Representative</h3>
+          <span class="when">June 2025 – August 2026</span>
+        </div>
+        <p class="where">WalkingCanes.com · El Dorado, AR</p>
+        <ul class="points">
+          <li>Assisted customers with product and service inquiries, resolving issues with clear and effective communication.</li>
+          <li>Analyzed customer needs to tailor solutions, improving satisfaction and conversion rates.</li>
+          <li>Processed transactions using POS systems with a high level of accuracy.</li>
+          <li>Collaborated with team members to improve customer service workflows and efficiency.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-top">
+          <h3>Cabinetmaker and Installer</h3>
+          <span class="when">May 2024 – August 2024</span>
+        </div>
+        <p class="where">El Dorado Cabinets · El Dorado, AR</p>
+        <ul class="points">
+          <li>Interpreted blueprints and technical drawings, translating specifications into precise physical outcomes.</li>
+          <li>Applied problem-solving and attention to detail to fabricate and install custom cabinetry.</li>
+          <li>Ensured quality control and accuracy throughout production and installation processes.</li>
+          <li>Worked independently and as part of a team to meet project deadlines.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-top">
+          <h3>Bobarista</h3>
+          <span class="when">June 2023 – December 2023</span>
+        </div>
+        <p class="where">Wildcat Bubble Tea · El Dorado, AR</p>
+        <ul class="points">
+          <li>Prepared beverages while maintaining consistency, cleanliness, and efficiency.</li>
+          <li>Trained new employees on procedures and customer service best practices.</li>
+          <li>Managed inventory and ensured smooth daily operations.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Additional information</h2>
+      <ul class="points">
+        <li>Available for full-time or part-time work, Monday through Saturday</li>
+        <li>Quick learner, comfortable picking up new systems, tools, and procedures</li>
+        <li>Reliable, punctual, and detail-oriented with a strong work ethic</li>
+      </ul>
+    </section>
+
+  </article>
+</main>
+
+<script>
+  /* filters: show one category at a time, and hide any year left empty */
+  const filters = document.querySelectorAll('.filter');
+  filters.forEach(btn => btn.addEventListener('click', () => {
+    const f = btn.dataset.filter;
+    filters.forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    document.querySelectorAll('.entry').forEach(e => {
+      e.hidden = f !== 'all' && !e.classList.contains(f);
+    });
+    document.querySelectorAll('.year-group').forEach(g => {
+      g.hidden = !g.querySelector('.entry:not([hidden])');
+    });
+  }));
+</script>
+
+</body>
+</html>

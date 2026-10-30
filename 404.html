@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found | cayson.dev</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2E5E3E">
+<!-- Served for any missing URL at any depth, so every path here starts from the root -->
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+<!-- Same theme as the main site: saved choice, otherwise the visitor's system setting -->
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t) t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500&family=Inter:wght@400;500&display=swap">
+
+<style>
+  /* design language v2 tokens, the same as index.html */
+  :root {
+    --bg: #F1E8D6;
+    --ink: #1F2421;
+    --muted: #5E665F;
+    --border: #E0D3BC;
+    --forest: #2E5E3E;
+    --cream: #F6F1E7;
+    --accent-on-forest: #F08A6C;
+    --btn-hover: #244B31;
+    --nav-border: color-mix(in srgb, var(--cream) 22%, transparent);
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    --bg: #15191C;
+    --ink: #EDE6D8;
+    --muted: #A3AAA2;
+    --border: #2C3338;
+    --btn-hover: #376E4A;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  :focus-visible { outline: 2px solid var(--forest); outline-offset: 3px; border-radius: 4px; }
+  header :focus-visible { outline-color: var(--cream); }
+
+  header {
+    background: var(--forest);
+    border-bottom: 1px solid var(--nav-border);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: max-content;
+    padding: 14px 20px;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .brand-mark { width: 30px; height: 30px; }
+  .brand-mark .mark-lt { stroke: var(--cream); }
+  .brand-mark .mark-gt { stroke: var(--accent-on-forest); }
+
+  .brand-word {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-word .tld { color: var(--accent-on-forest); }
+
+  /* the hero's dot grid, so it feels like the same site */
+  main {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: 64px 20px;
+    text-align: center;
+    background: radial-gradient(var(--border) 1.5px, transparent 2px) 0 0 / 24px 24px, var(--bg);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 7vw, 56px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  p { color: var(--muted); margin: 14px auto 28px; max-width: 40ch; }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    background: var(--forest);
+    color: var(--cream);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+
+  .btn:hover { background: var(--btn-hover); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="brand" aria-label="cayson.dev home">
+    <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <path class="mark-lt" d="M33 12 L13 32 L33 52" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="mark-gt" d="M41 25 L50 32 L41 39" fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="brand-word">cayson<span class="tld">.dev</span></span>
+  </a>
+</header>
+
+<main>
+  <div>
+    <h1>Nothing here.</h1>
+    <p>That page doesn't exist, or it moved. The good stuff is on the home page.</p>
+    <a class="btn" href="/">Back to cayson.dev</a>
+  </div>
+</main>
+
+</body>
+</html>
